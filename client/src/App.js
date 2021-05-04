@@ -4,12 +4,12 @@ import SavedList from './Movies/SavedList';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import MovieList from './Movies/MovieList.js';
 import Movie from './Movies/Movie.js';
-import {useRouteMatch} from 'react-router';
+import { useRouteMatch } from 'react-router';
 
 export default function App() {
   const [saved, setSaved] = useState([]); // Stretch: the ids of "saved" movies
   const [movieList, setMovieList] = useState([]);
-  const {path, url} = useRouteMatch();
+  const { path, url } = useRouteMatch();
 
   useEffect(() => {
     const getMovies = () => {
@@ -32,7 +32,7 @@ export default function App() {
   };
 
   return (
-    <div>
+    <div className='App'>
       <SavedList
         list={
           [
@@ -41,12 +41,14 @@ export default function App() {
         }
       />
       <div>
-        <Route exact path='/' component={MovieList}>
-          <MovieList movieList={movieList} movies={movieList} />
-        </Route>
-        <Route exact path='/movies/:id'>
-          <Movie key={movieList.id}></Movie>
-        </Route>
+        <Switch>
+          <Route exact path='/' component={MovieList}>
+            <MovieList movieList={movieList} movies={movieList} />
+          </Route>
+          <Route exact path='/movies/:id'>
+            <Movie key={movieList.id}></Movie>
+          </Route>
+        </Switch>
       </div>
     </div>
   );
